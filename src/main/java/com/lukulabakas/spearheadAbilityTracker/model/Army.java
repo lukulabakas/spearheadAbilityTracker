@@ -6,13 +6,17 @@ public class Army {
 	
 	private String name;
 	private List<Unit> units;
-	private List<Ability> abilities;
+	private Ability enhancement;
+	private Ability regimentAbility;
 	
 	
-	public void setAbilities(List<Ability> abilities) {this.abilities = abilities;}
-	public List<Ability> getAbilities(){return this.abilities;}
+	public void setEnhancement(Ability enhancement) {this.enhancement = enhancement;}
+	public Ability getEnhancement(){return this.enhancement;}
 	
 	public void setUnits(List<Unit> units) {this.units = units;}
 	public List<Unit> getUnits(){return this.units;}
+	
+	public void setRegimentAbility(Ability regimentAbility) {this.regimentAbility = regimentAbility;}
+	public Ability getRegimentAbility() {return this.regimentAbility;}
 
 }

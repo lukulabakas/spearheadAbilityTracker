@@ -21,7 +21,6 @@ public class ArmyController {
 	@Autowired
 	ArmyService armyService;
 	
-	//Basic CRUD
 	@GetMapping("/{name}")
 	public ResponseEntity<Army> getArmyByName(@PathVariable String name) {
 		return new ResponseEntity<>(armyService.getArmyByName(name), HttpStatus.OK);
@@ -40,4 +39,5 @@ public class ArmyController {
 	public ResponseEntity<List<Ability>> getAllRegimentAbilitiesByArmy(@PathVariable String name){
 		return new ResponseEntity<>(armyService.getAllRegimentAbilitiesByArmy(name), HttpStatus.OK);
 	}
+	@GetMapping("/{name}/")
 }
