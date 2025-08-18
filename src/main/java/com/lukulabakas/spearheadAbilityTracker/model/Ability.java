@@ -9,6 +9,7 @@ public class Ability {
 	private Set<AbilitySuperType> abilitySuperType;
 	private Set<Phase> phase;
 	private String effect;
+	private int uses;
 	
 	private void useAbility() {};
 }
