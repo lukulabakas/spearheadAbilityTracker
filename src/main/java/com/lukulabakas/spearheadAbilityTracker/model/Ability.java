@@ -1,13 +1,13 @@
 package com.lukulabakas.spearheadAbilityTracker.model;
 
-import java.util.Set;
+import java.util.List;
 
 public class Ability {
 
 	private String name;
-	private Set<AbilityType> abilityType;
-	private Set<AbilitySuperType> abilitySuperType;
-	private Set<Phase> phase;
+	private List<AbilityType> abilityType;
+	private List<AbilitySuperType> abilitySuperType;
+	private List<Phase> phase;
 	private String effect;
 	private int uses;
 	

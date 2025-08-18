@@ -1,11 +1,18 @@
 package com.lukulabakas.spearheadAbilityTracker.model;
 
 public enum Phase {
-	StartOfTurn,
-	HeroPhase,
-	MovementPhase,
-	ShootingPhase,
-	ChargePhase,
-	CombatPhase,
-	EndOfTurn
+	OwnStartOfTurn,
+	OpponentStartOfTurn,
+	OwnHeroPhase,
+	OpponentHeroPhase,
+	OwnMovementPhase,
+	OpponentMovementPhase,
+	OwnShootingPhase,
+	OpponentShootingPhase,
+	OwnChargePhase,
+	OpponentChargePhase,
+	OwnCombatPhase,
+	OpponentCombatPhase,
+	OwnEndOfTurn,
+	OpponentEndOfTurn
 }

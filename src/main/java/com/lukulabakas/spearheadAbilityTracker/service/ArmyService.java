@@ -1,0 +1,22 @@
+package com.lukulabakas.spearheadAbilityTracker.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.lukulabakas.spearheadAbilityTracker.model.Army;
+
+@Service
+public class ArmyService {
+
+	
+	//Basic CRUD
+	public Army getArmyByName(String name) {
+		//TODO load all army info from JSON and save into Army object
+		return null;
+	}
+	public List<Army> getAllArmyNames(){
+		//TODO load all army names from JSON
+		return null;
+	}
+}

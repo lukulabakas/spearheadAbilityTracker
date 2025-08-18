@@ -1,18 +1,18 @@
 package com.lukulabakas.spearheadAbilityTracker.model;
 
-import java.util.Set;
+import java.util.List;
 
 public class Army {
 	
 	private String name;
-	private Set<Unit> units;
-	private Set<Ability> abilities;
+	private List<Unit> units;
+	private List<Ability> abilities;
 	
 	
-	public void setAbilities(Set<Ability> abilities) {this.abilities = abilities;}
-	public Set<Ability> getAbilities(){return this.abilities;}
+	public void setAbilities(List<Ability> abilities) {this.abilities = abilities;}
+	public List<Ability> getAbilities(){return this.abilities;}
 	
-	public void setUnits(Set<Unit> units) {this.units = units;}
-	public Set<Unit> getUnits(){return this.units;}
+	public void setUnits(List<Unit> units) {this.units = units;}
+	public List<Unit> getUnits(){return this.units;}
 
 }
