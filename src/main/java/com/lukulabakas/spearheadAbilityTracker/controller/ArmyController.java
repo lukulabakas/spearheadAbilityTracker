@@ -40,4 +40,5 @@ public class ArmyController {
 		return new ResponseEntity<>(armyService.getAllRegimentAbilitiesByArmy(name), HttpStatus.OK);
 	}
 	@GetMapping("/{name}/")
+	
 }

@@ -8,6 +8,7 @@ public class Army {
 	private List<Unit> units;
 	private Ability enhancement;
 	private Ability regimentAbility;
+	private List<Ability> battleTraits;
 	
 	
 	public void setEnhancement(Ability enhancement) {this.enhancement = enhancement;}
@@ -18,5 +19,9 @@ public class Army {
 	
 	public void setRegimentAbility(Ability regimentAbility) {this.regimentAbility = regimentAbility;}
 	public Ability getRegimentAbility() {return this.regimentAbility;}
-
+	
+	public String getName() {return this.name;}
+	
+	public List<Ability> getBattleTraits(){return this.battleTraits;}
+	public void setBattleTraits(List<Ability> battleTraits) {this.battleTraits = battleTraits;}
 }
