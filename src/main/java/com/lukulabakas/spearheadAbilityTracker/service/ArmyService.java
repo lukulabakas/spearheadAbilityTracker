@@ -5,18 +5,18 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.lukulabakas.spearheadAbilityTracker.model.Ability;
-import com.lukulabakas.spearheadAbilityTracker.model.Army;
+import com.lukulabakas.spearheadAbilityTracker.model.ArmyState;
 
 @Service
 public class ArmyService {
 
 	
 	//Basic CRUD
-	public Army getArmyByName(String name) {
-		//TODO load all army info from JSON and save into Army object
+	public ArmyState getArmyByName(String name) {
+		//TODO load all army info from JSON and save into ArmyState object
 		return null;
 	}
-	public List<Army> getAllArmyNames(){
+	public List<ArmyState> getAllArmyNames(){
 		//TODO load all army names from JSON
 		return null;
 	}
