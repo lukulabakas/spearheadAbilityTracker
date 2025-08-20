@@ -20,4 +20,12 @@ public class GameService {
 		games.put(currentId, game);
 		return currentId;
 	}
+	public Game getGameById(int gameId) {
+		return games.get(gameId);
+	}
+	public int nextTurn(int gameId) {
+		Game game = games.get(gameId);
+		game.setTurn(game.getTurn()+1);
+		return game.getTurn();
+	}
 }
