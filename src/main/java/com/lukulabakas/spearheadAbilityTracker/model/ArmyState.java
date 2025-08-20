@@ -5,7 +5,11 @@ import java.util.List;
 //represents the dynamic data of an army that is currently active in a game
 public class ArmyState {
 	
+	//id in case 2 players choose the same army and name is not a unique identifier anymore
+	private int id;
 	private String name;
+	//reference to the static army info 
+	private Army army;
 	private String playerName;
 	private List<Unit> units;
 	private Ability enhancement;
@@ -13,6 +17,7 @@ public class ArmyState {
 	private List<Ability> battleTraits;
 	private boolean activeTurn;
 	
+	public int getId() {return this.id;}
 	
 	public void setEnhancement(Ability enhancement) {this.enhancement = enhancement;}
 	public Ability getEnhancement(){return this.enhancement;}

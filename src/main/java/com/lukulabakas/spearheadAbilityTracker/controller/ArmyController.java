@@ -39,6 +39,9 @@ public class ArmyController {
 	public ResponseEntity<List<Ability>> getAllRegimentAbilitiesByArmy(@PathVariable String name){
 		return new ResponseEntity<>(armyService.getAllRegimentAbilitiesByArmy(name), HttpStatus.OK);
 	}
-	@GetMapping("/{name}/")
+	@GetMapping("/{name}/battleTraits")
+	public ResponseEntity<List<Ability>> getAllBattleTraits(@PathVariable String name){
+		return new ResponseEntity<>(armyService.getAllBattleTraitsByArmy(name), HttpStatus.OK);
+	}
 	
 }
