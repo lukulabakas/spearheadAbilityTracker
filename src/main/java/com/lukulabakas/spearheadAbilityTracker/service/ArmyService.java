@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.lukulabakas.spearheadAbilityTracker.model.Ability;
 import com.lukulabakas.spearheadAbilityTracker.model.Army;
-import com.lukulabakas.spearheadAbilityTracker.model.ArmyState;
 
 @Service
 public class ArmyService {
