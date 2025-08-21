@@ -15,7 +15,6 @@ public class ArmyState {
 	private Ability enhancement;
 	private Ability regimentAbility;
 	private List<Ability> battleTraits;
-	private boolean activeTurn;
 	
 	public int getId() {return this.id;}
 	
@@ -36,6 +35,6 @@ public class ArmyState {
 	public List<Ability> getBattleTraits(){return this.battleTraits;}
 	public void setBattleTraits(List<Ability> battleTraits) {this.battleTraits = battleTraits;}
 	
-	public boolean getActiveTurn() {return this.activeTurn;}
-	public void setActiveTurn(boolean activeTurn) {this.activeTurn = activeTurn;}
+	public Army getArmy() {return this.army;}
+	public void setArmy(Army army) {this.army = army;}
 }
