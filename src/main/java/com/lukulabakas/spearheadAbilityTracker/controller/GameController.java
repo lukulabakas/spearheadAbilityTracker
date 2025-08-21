@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lukulabakas.spearheadAbilityTracker.dto.TurnResponse;
 import com.lukulabakas.spearheadAbilityTracker.exception.GameNotFoundException;
-import com.lukulabakas.spearheadAbilityTracker.model.Game;
 import com.lukulabakas.spearheadAbilityTracker.service.GameService;
 
 @RestController
@@ -34,8 +33,6 @@ public class GameController {
 			return ResponseEntity.ok(gameService.nextTurn(gameId));
 		}catch (GameNotFoundException e){
 			return ResponseEntity.notFound().build();
-		}
-			
 		}
 	}
 }
