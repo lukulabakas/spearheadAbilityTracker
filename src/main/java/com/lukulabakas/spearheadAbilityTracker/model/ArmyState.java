@@ -1,5 +1,6 @@
 package com.lukulabakas.spearheadAbilityTracker.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //represents the dynamic data of an army that is currently active in a game
@@ -37,4 +38,15 @@ public class ArmyState {
 	
 	public Army getArmy() {return this.army;}
 	public void setArmy(Army army) {this.army = army;}
+	
+	public List<Ability> getAllAbilities(){
+		List<Ability> allAbilities = new ArrayList<>();
+		allAbilities.add(this.enhancement);
+		allAbilities.add(this.regimentAbility);
+		allAbilities.addAll(battleTraits);
+		for(Unit unit : this.units) {
+			allAbilities.addAll(unit.getAbilities());
+		}
+		return allAbilities;
+	}
 }

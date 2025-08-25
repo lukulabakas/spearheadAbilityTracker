@@ -10,11 +10,13 @@ public class Ability {
 	private List<AbilitySuperType> abilitySuperTypes;
 	//determines when the ability can be used
 	private List<Phase> phases;
+	private List<Integer> battleRounds;
 	private String effect;
 	//if the number of uses is limited the attribute "uses" detmerines the amount 
 	//"limitedUses" is always to be checked before using "uses"
 	private boolean limitedUses;
 	private int uses;
+	private boolean active;
 	
 	public void setName(String name) {this.name = name;}
 	public String getName() {return this.name;}
@@ -28,6 +30,9 @@ public class Ability {
 	public void setPhases(List<Phase> phases) {this.phases = phases;}
 	public List<Phase> getPhases(){return this.phases;}
 	
+	public void setBattleRounds(List<Integer> battleRounds) {this.battleRounds = battleRounds;}
+	public List<Integer> getBattleRounds(){return this.battleRounds;}
+	
 	public void setEffect(String effect) {this.effect = effect;}
 	public String getEffect() {return this.effect;}
 	
@@ -36,4 +41,7 @@ public class Ability {
 	
 	public void setUses(int uses) {this.uses = uses;}
 	public int getUses() {return this.uses;}
+	
+	public void setActive(boolean active) {this.active = active;}
+	public boolean getActive() {return this.active;}
 }

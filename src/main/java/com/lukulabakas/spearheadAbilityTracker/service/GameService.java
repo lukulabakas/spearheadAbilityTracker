@@ -1,16 +1,27 @@
 package com.lukulabakas.spearheadAbilityTracker.service;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lukulabakas.spearheadAbilityTracker.dto.TurnResponse;
 import com.lukulabakas.spearheadAbilityTracker.exception.GameNotFoundException;
+import com.lukulabakas.spearheadAbilityTracker.model.Ability;
 import com.lukulabakas.spearheadAbilityTracker.model.Game;
+import com.lukulabakas.spearheadAbilityTracker.model.Phase;
 
+@Service
 public class GameService {
+	
+	@Autowired
+	AbilityService abilityService;
 
-	//list of all currently active games
+	//HashMap of all currently active games
 	private Map<Integer, Game> games = new HashMap<>();
 	//counter for game ids; for current in memory saving it just always starts at 1 again
 	private int nextId = 1;
@@ -25,6 +36,8 @@ public class GameService {
 	public Game getGameById(int gameId) {
 		return games.get(gameId);
 	}
+	//advance turn
+	//return a TurnResponse with the new battleRound, activeTeam and a boolean to indicate if its the last Turn
 	public TurnResponse nextTurn(int gameId) throws GameNotFoundException{
 		Game game = games.get(gameId);
 		if(game == null) {
@@ -43,11 +56,26 @@ public class GameService {
 		game.setActiveTeam(nextActiveTeam);
 		//if after proceeding to the next turn we would be in the last turn of the last battle round, this is saved into the lastTurn variable
 		boolean lastTurn = (game.getBattleRound() == maxBattleRounds) && (nextActiveTeam == (numberOfTeams - 1));
+		boolean newBattleRound = game.getActiveTeam() == 0;
 		//return is current battle round, current activeTeam (or turn) and the info whether this turn will be the last of the game
 		return new TurnResponse(
 				game.getBattleRound(),
 				game.getActiveTeam(),
-				lastTurn
+				lastTurn,
+				newBattleRound
 		);
+	}
+	//returns all active abilities in the current turn of the current battleround
+	public List<Ability> listActiveAbilitiesByBattleRoundByTeam(int gameId, int battleRound, int activeTeam, Phase currentPhase){
+		Game game = getGameById(gameId);
+		List<Ability> abilities = new ArrayList<>();
+		for(int i = 0; game.getTeams().get(activeTeam).get(i) != null; i++) {
+			abilities.addAll(game.getTeams().get(activeTeam).get(i).getAllAbilities());
+		}
+		return abilityService.filterActiveAbilities(abilities,battleRound, currentPhase, activeTeam);
+	}
+	
+	public void updateTurnOrder() {
+		
 	}
 }
