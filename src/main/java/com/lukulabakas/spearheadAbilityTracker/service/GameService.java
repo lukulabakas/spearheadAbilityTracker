@@ -2,13 +2,17 @@ package com.lukulabakas.spearheadAbilityTracker.service;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lukulabakas.spearheadAbilityTracker.dto.TurnResponse;
 import com.lukulabakas.spearheadAbilityTracker.exception.GameNotFoundException;
+import com.lukulabakas.spearheadAbilityTracker.exception.TeamNotFoundException;
 import com.lukulabakas.spearheadAbilityTracker.model.Game;
+import com.lukulabakas.spearheadAbilityTracker.model.Team;
 
 
 @Service
@@ -29,16 +33,18 @@ public class GameService {
 		games.put(currentId, game);
 		return currentId;
 	}
-	public Game getGameById(int gameId) {
-		return games.get(gameId);
+	public Game getGameById(int gameId) throws GameNotFoundException{
+		Game game = games.get(gameId);
+		if(game != null) {
+			return game;
+		}else {
+			throw new GameNotFoundException("Game not found");
+		}
 	}
 	//advance turn
 	//return a TurnResponse with the new battleRound, activeTeam and a boolean to indicate if its the last Turn
-	public TurnResponse nextTurn(int gameId) throws GameNotFoundException{
+	public TurnResponse nextTurn(int gameId) {
 		Game game = games.get(gameId);
-		if(game == null) {
-			throw new GameNotFoundException("Game not found");
-		}
 		//cycle of every team having a turn is a battle round. A game consists of 4 battle rounds
 		int maxBattleRounds = 4;
 		//in each battle round each team gets a turn, so this is the amount of turns that have to be considered
@@ -63,7 +69,22 @@ public class GameService {
 		);
 	}
 	
-	public void updateTurnOrder() {
-		
+	public void updateTurnOrder(int gameId, List<Integer> newTurnOrderTeamIds) {
+		Game game = getGameById(gameId);
+		List<Team> newTurnOrder = new ArrayList<>();
+		for(int id : newTurnOrderTeamIds) {
+			newTurnOrder.add(findTeamById(gameId, id));
+		}
+		game.setTeams(newTurnOrder);
+	}
+	
+	public Team findTeamById(int gameId, int teamId) {
+		Game game = getGameById(gameId);
+		for(Team team : game.getTeams()) {
+			if(team.getId() == teamId) {
+				return team;
+			}
+		}
+		throw new TeamNotFoundException("Team not found");
 	}
 }
