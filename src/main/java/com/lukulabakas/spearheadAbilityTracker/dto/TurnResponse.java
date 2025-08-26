@@ -1,17 +1,21 @@
 package com.lukulabakas.spearheadAbilityTracker.dto;
 
+import com.lukulabakas.spearheadAbilityTracker.model.Phase;
+
 public class TurnResponse {
 
 	private int currentTurn;
 	private int activeTeam;
 	private boolean lastTurn;
 	private boolean newBattleRound;
+	private Phase currentPhase;
 	
-	public TurnResponse(int currentTurn, int activeTeam, boolean lastTurn, boolean newBattleRound) {
+	public TurnResponse(int currentTurn, int activeTeam, boolean lastTurn, boolean newBattleRound, Phase currentPhase) {
 		this.currentTurn = currentTurn;
 		this.activeTeam = activeTeam;
 		this.lastTurn = lastTurn;
 		this.newBattleRound = newBattleRound;
+		this.currentPhase = currentPhase;
 	}
 	
 	public int getCurrentTurn() {return this.currentTurn;}
@@ -25,4 +29,7 @@ public class TurnResponse {
 	
 	public boolean getNewBattleRound() {return this.newBattleRound;}
 	public void setNewBattleRound(boolean newBattleRound) {this.newBattleRound = newBattleRound;}
+	
+	public Phase getCurrentPhase() {return this.currentPhase;}
+	public void setCurrentPhase(Phase currentPhase) {this.currentPhase = currentPhase;}
 }

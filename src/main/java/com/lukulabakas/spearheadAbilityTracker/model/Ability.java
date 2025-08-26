@@ -7,7 +7,8 @@ public class Ability {
 	private int id;
 	private String name;
 	private List<AbilityType> abilityTypes;
-	private List<AbilitySource> abilitySource;
+	private AbilitySource abilitySource;
+	private Unit sourceUnit;
 	private List<Phase> usableInPhases;
 	private List<Integer> usableInBattleRounds;
 	private String effect;
@@ -20,8 +21,11 @@ public class Ability {
 	public void setAbilityType(List<AbilityType> abilityTypes) {this.abilityTypes = abilityTypes;}
 	public List<AbilityType> getAbilityTypes(){return this.abilityTypes;}
 	
-	public void setAbilitySuperTypes(List<AbilitySource> abilitySuperTypes) {this.abilitySource = abilitySuperTypes;}
-	public List<AbilitySource> getAbilitySuperTypes(){return this.abilitySource;}
+	public void setAbilitySuperTypes(AbilitySource abilitySource) {this.abilitySource = abilitySource;}
+	public AbilitySource getAbilitySuperTypes(){return this.abilitySource;}
+	
+	public void setSourceUnit(Unit sourceUnit) {this.sourceUnit = sourceUnit;}
+	public Unit getSourceUnit() {return this.sourceUnit;}
 	
 	public void setPhases(List<Phase> phases) {this.usableInPhases = phases;}
 	public List<Phase> getPhases(){return this.usableInPhases;}

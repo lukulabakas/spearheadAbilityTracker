@@ -60,12 +60,14 @@ public class GameService {
 		//if after proceeding to the next turn we would be in the last turn of the last battle round, this is saved into the lastTurn variable
 		boolean lastTurn = (game.getCurrentBattleRound() == maxBattleRounds) && (newActiveTeamIndex == (numberOfTeams - 1));
 		boolean newBattleRound = game.getTeams().indexOf(game.getActiveTeam()) == 0;
+		
 		//return is current battle round, current activeTeam (or turn) and the info whether this turn will be the last of the game
 		return new TurnResponse(
 				game.getCurrentBattleRound(),
 				newActiveTeamIndex,
 				lastTurn,
-				newBattleRound
+				newBattleRound,
+				currentPhase
 		);
 	}
 	

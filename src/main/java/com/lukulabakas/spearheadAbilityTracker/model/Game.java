@@ -11,9 +11,12 @@ public class Game {
 	int currentBattleRound;
 	//reference to the team that is currently taking their turn
 	Team activeTeam;
+	Phase currentPhase;
 	
 	public Game(int id) {
 		this.id = id;
+		this.currentBattleRound = 1;
+		this.currentPhase = Phase.StartOfTurn;
 	}
 
 	public List<Team> getTeams() {return teams;}
@@ -27,4 +30,7 @@ public class Game {
 	
 	//id cannot be changed afterwards, only in constructor
 	public int getId() {return id;}
+	
+	public void setCurrentPhase(Phase currentPhase) {this.currentPhase = currentPhase;}
+	public Phase getCurrentPhase() {return this.currentPhase;}
 }
