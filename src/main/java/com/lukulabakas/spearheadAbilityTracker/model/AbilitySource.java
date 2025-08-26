@@ -1,6 +1,6 @@
 package com.lukulabakas.spearheadAbilityTracker.model;
 
-public enum AbilitySuperType {
+public enum AbilitySource {
 	BattleTrait,
 	RegimentAbility,
 	Enhancement,

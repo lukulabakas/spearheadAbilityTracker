@@ -5,28 +5,26 @@ import java.util.List;
 public class Game {
 
 	private int id;
-	//list of the armies participing in this game
-	private List<List<ArmyState>> teams;
-	//saves the current turn the game is in
-	private int battleRound;
-	//saves the reference to the team whose turn it is
-	private int activeTeam;
+	//list of the teams in this game, order in the list is turn order; get(0) goes first
+	private List<Team> teams;
+	//1, 2, 3, 4
+	int currentBattleRound;
+	//reference to the team that is currently taking their turn
+	Team activeTeam;
 	
 	public Game(int id) {
 		this.id = id;
-		this.battleRound = 1;
-		//reference to an object in the teams List, thus starting at 0
-		this.activeTeam = 0;
 	}
+
+	public List<Team> getTeams() {return teams;}
+	public void setTeams(List<Team> teams) {this.teams = teams;}
 	
-	public int getId() {return this.id;}
+	public int getCurrentBattleRound() {return currentBattleRound;}
+	public void setCurrentBattleRound(int currentBattleRound) {this.currentBattleRound = currentBattleRound;}
 	
-	public List<List<ArmyState>> getTeams(){return this.teams;}
-	public void setTeams(List<List<ArmyState>> teams) {this.teams = teams;}
+	public Team getActiveTeam() {return activeTeam;}
+	public void setActiveTeam(Team activeTeam) {this.activeTeam = activeTeam;}
 	
-	public void setBattleRound(int turn) {this.battleRound = turn;}
-	public int getBattleRound() {return this.battleRound;}
-	
-	public int getActiveTeam() {return this.activeTeam;}
-	public void setActiveTeam(int activeTeam) {this.activeTeam = activeTeam;}
+	//id cannot be changed afterwards, only in constructor
+	public int getId() {return id;}
 }

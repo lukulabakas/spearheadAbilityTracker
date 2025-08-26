@@ -12,7 +12,7 @@ public class Army {
 	private List<Ability> battleTraits;
 
 	//the attributes of an army can be retrieved but never changed 
-	//always static info, e.g. game rules
+	//always static info, compare game rules
 	public String getName() {return this.name;}
 	public List<Unit> getUnits(){return this.units;}
 	public List<Ability> getEnhancements(){return this.enhancements;}
