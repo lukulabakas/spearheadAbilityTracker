@@ -76,6 +76,7 @@ public class GameService {
 			newTurnOrder.add(findTeamById(gameId, id));
 		}
 		game.setTeams(newTurnOrder);
+		game.setActiveTeam(game.getTeams().get(0));
 	}
 	
 	public Team findTeamById(int gameId, int teamId) {
