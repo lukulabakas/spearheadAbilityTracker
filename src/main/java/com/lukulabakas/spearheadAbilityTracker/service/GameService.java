@@ -12,6 +12,7 @@ import com.lukulabakas.spearheadAbilityTracker.dto.TurnResponse;
 import com.lukulabakas.spearheadAbilityTracker.exception.GameNotFoundException;
 import com.lukulabakas.spearheadAbilityTracker.exception.TeamNotFoundException;
 import com.lukulabakas.spearheadAbilityTracker.model.Game;
+import com.lukulabakas.spearheadAbilityTracker.model.Phase;
 import com.lukulabakas.spearheadAbilityTracker.model.Team;
 
 
@@ -25,6 +26,17 @@ public class GameService {
 	private Map<Integer, Game> games = new HashMap<>();
 	//counter for game ids; for current in memory saving it just always starts at 1 again
 	private int nextId = 1;
+	//variables to track game state
+	boolean lastPhase;
+	boolean lastTurn;
+	boolean lastBattleRound;
+	boolean newTurn;
+	boolean newBattleRound;
+	//cycle of every team having a turn is a battle round. A game consists of 4 battle rounds
+	int maxBattleRounds = 4;
+	//a turn consists of 7 phases
+	List<Phase> phases = List.of(Phase.StartOfTurn, Phase.HeroPhase, Phase.MovementPhase, Phase.ShootingPhase, Phase.ChargePhase, Phase.CombatPhase, Phase.EndOfTurn);
+
 	
 	public int createNewGame(){
 		int currentId = nextId;
@@ -42,33 +54,57 @@ public class GameService {
 		}
 	}
 	//advance turn
-	//return a TurnResponse with the new battleRound, activeTeam and a boolean to indicate if its the last Turn
-	public TurnResponse nextTurn(int gameId) {
+	public TurnResponse finishPhase(int gameId) {
 		Game game = games.get(gameId);
-		//cycle of every team having a turn is a battle round. A game consists of 4 battle rounds
-		int maxBattleRounds = 4;
-		//in each battle round each team gets a turn, so this is the amount of turns that have to be considered
-		int numberOfTeams = game.getTeams().size();
-		int currentActiveTeamIndex = game.getTeams().indexOf(game.getActiveTeam());
-		//++ the active index, then check if each team already had a turn this battleround
-		int newActiveTeamIndex = (currentActiveTeamIndex + 1) % numberOfTeams;
-		if(newActiveTeamIndex == 0) {
-			//if each team had a turn this battle round ++ the battleround
-			game.setCurrentBattleRound(game.getCurrentBattleRound() + 1);
-		}
-		game.setActiveTeam(game.getTeams().get(newActiveTeamIndex));
-		//if after proceeding to the next turn we would be in the last turn of the last battle round, this is saved into the lastTurn variable
-		boolean lastTurn = (game.getCurrentBattleRound() == maxBattleRounds) && (newActiveTeamIndex == (numberOfTeams - 1));
-		boolean newBattleRound = game.getTeams().indexOf(game.getActiveTeam()) == 0;
+		//a turn consists of 7 phases
 		
-		//return is current battle round, current activeTeam (or turn) and the info whether this turn will be the last of the game
+		
+		//three variables to represent the current state of the game: phase, turn and battleround
+		int currentBattleRound = game.getCurrentBattleRound();
+		int currentActiveTeamIndex = game.getTeams().indexOf(game.getActiveTeam());
+		//Variables to keep track of turn progression
+		int newActiveTeamIndex = game.getTeams().indexOf(game.getActiveTeam());
+		lastPhase = false;
+		lastTurn = false;
+		lastBattleRound = false;
+		newTurn = false;
+		newBattleRound = false;
+		//advance to the next phase, if we already were in the last phase get back to first phase
+
+		
+		//return the current turn progression
 		return new TurnResponse(
 				game.getCurrentBattleRound(),
 				newActiveTeamIndex,
 				lastTurn,
 				newBattleRound,
-				currentPhase
+				game.getCurrentPhase()
 		);
+	}
+	
+	public void advancePhase(Game game) {
+		game.setCurrentPhase(phases.get(phases.indexOf(game.getCurrentPhase()) + 1 % 7));
+		if(game.getCurrentPhase() == phases.get(0)) {
+			newTurn = true;
+			advanceTurn(game);
+		}else if(game.getCurrentPhase() == phases.get(6)) {
+			lastPhase = true;
+		}
+	}
+	public void advanceTurn(Game game) {
+		//index of the team that turn it was previously
+		int oldTeamIndex = game.getTeams().indexOf(game.getActiveTeam());
+		int newTeamIndex = (oldTeamIndex + 1) % game.getTeams().size();
+		//game.setActiveTeam(game.getTeams().get(game.getTeams().indexOf(game.getActiveTeam()) + 1 % game.getTeams().size()));
+		if(newTeamIndex == 0) {
+			newBattleRound = true;
+			advanceBattleRound(game);
+		}else if(newTeamIndex == game.getTeams().size()-1) {
+			lastTurn = true;
+		}
+	}
+	public void advanceBattleRound(Game game) {
+		//TODO ...
 	}
 	
 	public void updateTurnOrder(int gameId, List<Integer> newTurnOrderTeamIds) {
