@@ -9,13 +9,15 @@ public class TurnResponse {
 	private boolean lastTurn;
 	private boolean newBattleRound;
 	private Phase currentPhase;
+	private boolean gameEnd;
 	
-	public TurnResponse(int currentTurn, int activeTeam, boolean lastTurn, boolean newBattleRound, Phase currentPhase) {
+	public TurnResponse(int currentTurn, int activeTeam, boolean lastTurn, boolean newBattleRound, Phase currentPhase, boolean gameEnd) {
 		this.currentTurn = currentTurn;
 		this.activeTeam = activeTeam;
 		this.lastTurn = lastTurn;
 		this.newBattleRound = newBattleRound;
 		this.currentPhase = currentPhase;
+		this.gameEnd = gameEnd;
 	}
 	
 	public int getCurrentTurn() {return this.currentTurn;}
@@ -32,4 +34,7 @@ public class TurnResponse {
 	
 	public Phase getCurrentPhase() {return this.currentPhase;}
 	public void setCurrentPhase(Phase currentPhase) {this.currentPhase = currentPhase;}
+	
+	public boolean getGameEnd() {return this.gameEnd;}
+	public void setGameEnd(boolean gameEnd) {this.gameEnd = gameEnd;}
 }

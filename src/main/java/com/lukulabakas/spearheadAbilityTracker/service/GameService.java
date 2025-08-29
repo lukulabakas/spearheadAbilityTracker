@@ -32,6 +32,7 @@ public class GameService {
 	boolean lastBattleRound;
 	boolean newTurn;
 	boolean newBattleRound;
+	boolean gameEnd;
 	//cycle of every team having a turn is a battle round. A game consists of 4 battle rounds
 	int maxBattleRounds = 4;
 	//a turn consists of 7 phases
@@ -69,8 +70,9 @@ public class GameService {
 		lastBattleRound = false;
 		newTurn = false;
 		newBattleRound = false;
-		//advance to the next phase, if we already were in the last phase get back to first phase
-
+		gameEnd = false;
+		//call method to advance the phase, if the end of a turn is reached, advanceTurn is called, same for advanceBattleRound
+		advancePhase(game);
 		
 		//return the current turn progression
 		return new TurnResponse(
@@ -78,7 +80,8 @@ public class GameService {
 				newActiveTeamIndex,
 				lastTurn,
 				newBattleRound,
-				game.getCurrentPhase()
+				game.getCurrentPhase(),
+				gameEnd
 		);
 	}
 	
@@ -104,7 +107,14 @@ public class GameService {
 		}
 	}
 	public void advanceBattleRound(Game game) {
-		//TODO ...
+		if(game.getCurrentBattleRound() == 4) {
+			gameEnd = true;
+		}else {
+			game.setCurrentBattleRound(game.getCurrentBattleRound() + 1);
+			if(game.getCurrentBattleRound() == 4) {
+				lastBattleRound = true;
+			}
+		}
 	}
 	
 	public void updateTurnOrder(int gameId, List<Integer> newTurnOrderTeamIds) {
