@@ -142,6 +142,15 @@ public class GameService {
 	}
 	//returns all abilities that are currently usable by all the inactive teams in the game with gameId
 	public List<Ability> getInactiveTeamAbilities(int gameId){
-		return null;
+		Game game = games.get(gameId);
+		List<Ability> inActiveTeamAbilities = new ArrayList<>();
+		List<Team> inactiveTeams = game.getTeams();
+		inactiveTeams.remove(game.getActiveTeam());
+		for(Team team : inactiveTeams) {
+			for(ArmyState army : team.getArmies()) {
+				inActiveTeamAbilities.addAll(army.getAllAbilities());
+			}
+		}
+		return inActiveTeamAbilities;
 	}
 }
