@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.lukulabakas.spearheadAbilityTracker.dto.TurnResponse;
 import com.lukulabakas.spearheadAbilityTracker.exception.GameNotFoundException;
 import com.lukulabakas.spearheadAbilityTracker.exception.TeamNotFoundException;
+import com.lukulabakas.spearheadAbilityTracker.model.Ability;
 import com.lukulabakas.spearheadAbilityTracker.model.Game;
 import com.lukulabakas.spearheadAbilityTracker.model.Phase;
 import com.lukulabakas.spearheadAbilityTracker.model.Team;
@@ -38,7 +39,6 @@ public class GameService {
 	//a turn consists of 7 phases
 	List<Phase> phases = List.of(Phase.StartOfTurn, Phase.HeroPhase, Phase.MovementPhase, Phase.ShootingPhase, Phase.ChargePhase, Phase.CombatPhase, Phase.EndOfTurn);
 
-	
 	public int createNewGame(){
 		int currentId = nextId;
 		nextId++;
@@ -54,15 +54,10 @@ public class GameService {
 			throw new GameNotFoundException("Game not found");
 		}
 	}
-	//advance turn
+	//initialization of variables then trigger next phase by advancePhase() method
+	//advancePhase(), advanceTurn() and advanceBattleRound() identify which has to be 
 	public TurnResponse finishPhase(int gameId) {
 		Game game = games.get(gameId);
-		//a turn consists of 7 phases
-		
-		
-		//three variables to represent the current state of the game: phase, turn and battleround
-		int currentBattleRound = game.getCurrentBattleRound();
-		int currentActiveTeamIndex = game.getTeams().indexOf(game.getActiveTeam());
 		//Variables to keep track of turn progression
 		int newActiveTeamIndex = game.getTeams().indexOf(game.getActiveTeam());
 		lastPhase = false;
@@ -73,7 +68,6 @@ public class GameService {
 		gameEnd = false;
 		//call method to advance the phase, if the end of a turn is reached, advanceTurn is called, same for advanceBattleRound
 		advancePhase(game);
-		
 		//return the current turn progression
 		return new TurnResponse(
 				game.getCurrentBattleRound(),
@@ -84,7 +78,6 @@ public class GameService {
 				gameEnd
 		);
 	}
-	
 	public void advancePhase(Game game) {
 		game.setCurrentPhase(phases.get(phases.indexOf(game.getCurrentPhase()) + 1 % 7));
 		if(game.getCurrentPhase() == phases.get(0)) {
@@ -116,7 +109,8 @@ public class GameService {
 			}
 		}
 	}
-	
+	//after each battleround the turn order may change
+	//this order sets the turn order of the game with gameId to newTurnOrderTeamIds
 	public void updateTurnOrder(int gameId, List<Integer> newTurnOrderTeamIds) {
 		Game game = getGameById(gameId);
 		List<Team> newTurnOrder = new ArrayList<>();
@@ -126,7 +120,6 @@ public class GameService {
 		game.setTeams(newTurnOrder);
 		game.setActiveTeam(game.getTeams().get(0));
 	}
-	
 	public Team findTeamById(int gameId, int teamId) {
 		Game game = getGameById(gameId);
 		for(Team team : game.getTeams()) {
@@ -136,4 +129,5 @@ public class GameService {
 		}
 		throw new TeamNotFoundException("Team not found");
 	}
+
 }
