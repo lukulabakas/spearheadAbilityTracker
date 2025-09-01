@@ -129,5 +129,9 @@ public class GameService {
 		}
 		throw new TeamNotFoundException("Team not found");
 	}
-
+	//returns all abilities that are currently usable by the active Team in the game with gameId
+	public List<Ability> getActiveTeamAbilities(int gameId){
+		
+		return null;
+	}
 }

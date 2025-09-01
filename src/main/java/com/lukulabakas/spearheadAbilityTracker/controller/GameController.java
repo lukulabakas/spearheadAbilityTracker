@@ -30,7 +30,7 @@ public class GameController {
 	@PutMapping("/{id}/nextTurn")
 	public ResponseEntity<TurnResponse> nextTurn(@PathVariable int gameId){
 		try {
-			return ResponseEntity.ok(gameService.nextTurn(gameId));
+			return ResponseEntity.ok(gameService.finishPhase(gameId));
 		}catch (GameNotFoundException e){
 			return ResponseEntity.notFound().build();
 		}
