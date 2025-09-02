@@ -159,4 +159,12 @@ public class GameService {
 		Game game = games.get(gameId);
 		game.getActiveTeam().setPoints(game.getActiveTeam().getPoints() + points);
 	}
+	public HashMap<Team, Integer> returnCurrentPoints(int gameId){
+		Game game = games.get(gameId);
+		HashMap<Team, Integer> currentPoints = new HashMap<>();
+		for(Team team : game.getTeams()) {
+			currentPoints.put(team, team.getPoints());
+		}
+		return currentPoints;
+	}
 }
