@@ -157,7 +157,7 @@ public class GameService {
 	}
 	public void addActiveTeamPoints(int gameId, int points) {
 		Game game = games.get(gameId);
-		game.getActiveTeam().setPoints(game.getActiveTeam().getPoints() + points);
+		game.getActiveTeam().addPoints(points);
 	}
 	public HashMap<Team, Integer> returnCurrentPoints(int gameId){
 		Game game = games.get(gameId);
