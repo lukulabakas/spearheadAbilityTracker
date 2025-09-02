@@ -155,4 +155,8 @@ public class GameService {
 		List<AbilityScope> abilityScope = List.of(AbilityScope.OPPONENT_TURN, AbilityScope.ANY_TURN);
 		return abilityService.filterActiveAbilities(inActiveTeamAbilities, game, abilityScope);
 	}
+	public void addActiveTeamPoints(int gameId, int points) {
+		Game game = games.get(gameId);
+		game.getActiveTeam().setPoints(game.getActiveTeam().getPoints() + points);
+	}
 }
