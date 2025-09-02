@@ -12,11 +12,11 @@ import com.lukulabakas.spearheadAbilityTracker.dto.TurnResponse;
 import com.lukulabakas.spearheadAbilityTracker.exception.GameNotFoundException;
 import com.lukulabakas.spearheadAbilityTracker.exception.TeamNotFoundException;
 import com.lukulabakas.spearheadAbilityTracker.model.Ability;
+import com.lukulabakas.spearheadAbilityTracker.model.AbilityScope;
 import com.lukulabakas.spearheadAbilityTracker.model.ArmyState;
 import com.lukulabakas.spearheadAbilityTracker.model.Game;
 import com.lukulabakas.spearheadAbilityTracker.model.Phase;
 import com.lukulabakas.spearheadAbilityTracker.model.Team;
-import com.lukulabakas.spearheadAbilityTracker.model.Unit;
 
 
 @Service
@@ -138,7 +138,8 @@ public class GameService {
 		for(ArmyState army : game.getActiveTeam().getArmies()) {
 			activeTeamAbilities.addAll(army.getAllAbilities());	
 			}
-		return activeTeamAbilities;
+		List<AbilityScope> abilityScope = List.of(AbilityScope.OWN_TURN);
+		return abilityService.filterActiveAbilities(activeTeamAbilities, game, abilityScope);
 	}
 	//returns all abilities that are currently usable by all the inactive teams in the game with gameId
 	public List<Ability> getInactiveTeamAbilities(int gameId){
@@ -151,6 +152,7 @@ public class GameService {
 				inActiveTeamAbilities.addAll(army.getAllAbilities());
 			}
 		}
-		return inActiveTeamAbilities;
+		List<AbilityScope> abilityScope = List.of(AbilityScope.OPPONENT_TURN, AbilityScope.ANY_TURN);
+		return abilityService.filterActiveAbilities(inActiveTeamAbilities, game, abilityScope);
 	}
 }

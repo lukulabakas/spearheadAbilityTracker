@@ -11,6 +11,7 @@ public class Ability {
 	private Unit sourceUnit;
 	private List<Phase> usableInPhases;
 	private List<Integer> usableInBattleRounds;
+	private AbilityScope abilityScope;
 	private String effect;
 	
 	public int getId() {return this.id;}
@@ -32,6 +33,9 @@ public class Ability {
 	
 	public void setBattleRounds(List<Integer> battleRounds) {this.usableInBattleRounds = battleRounds;}
 	public List<Integer> getBattleRounds(){return this.usableInBattleRounds;}
+	
+	public void setAbilityScope(AbilityScope abilityScope) {this.abilityScope = abilityScope;}
+	public AbilityScope getAbilityScope() {return this.abilityScope;}
 	
 	public void setEffect(String effect) {this.effect = effect;}
 	public String getEffect() {return this.effect;}
