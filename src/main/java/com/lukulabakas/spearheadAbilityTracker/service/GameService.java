@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.lukulabakas.spearheadAbilityTracker.dto.TeamPoints;
 import com.lukulabakas.spearheadAbilityTracker.dto.TurnResponse;
 import com.lukulabakas.spearheadAbilityTracker.exception.GameNotFoundException;
 import com.lukulabakas.spearheadAbilityTracker.exception.TeamNotFoundException;
@@ -159,12 +161,12 @@ public class GameService {
 		Game game = games.get(gameId);
 		game.getActiveTeam().addPoints(points);
 	}
-	public HashMap<Team, Integer> returnCurrentPoints(int gameId){
+	public List<TeamPoints> returnCurrentPoints(int gameId){
 		Game game = games.get(gameId);
-		HashMap<Team, Integer> currentPoints = new HashMap<>();
+		List<TeamPoints> teamPointsList = new ArrayList<>();
 		for(Team team : game.getTeams()) {
-			currentPoints.put(team, team.getPoints());
+			teamPointsList.add(new TeamPoints(team.getId(), team.getPoints()));
 		}
-		return currentPoints;
+		return teamPointsList;
 	}
 }
