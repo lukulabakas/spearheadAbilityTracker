@@ -43,6 +43,7 @@ public class GameService {
 	//a turn consists of 7 phases
 	List<Phase> phases = List.of(Phase.StartOfTurn, Phase.HeroPhase, Phase.MovementPhase, Phase.ShootingPhase, Phase.ChargePhase, Phase.CombatPhase, Phase.EndOfTurn);
 
+
 	public int createNewGame(){
 		int currentId = nextId;
 		nextId++;
@@ -60,8 +61,11 @@ public class GameService {
 	}
 	//initialization of variables then trigger next phase by advancePhase() method
 	//advancePhase(), advanceTurn() and advanceBattleRound() identify which has to be 
-	public TurnResponse finishPhase(int gameId) {
+	public TurnResponse finishPhase(int gameId) throws GameNotFoundException{
 		Game game = games.get(gameId);
+		if(game == null) {
+			throw new GameNotFoundException("Game not found");
+		}
 		//Variables to keep track of turn progression
 		int newActiveTeamIndex = game.getTeams().indexOf(game.getActiveTeam());
 		lastPhase = false;
@@ -124,7 +128,7 @@ public class GameService {
 		game.setTeams(newTurnOrder);
 		game.setActiveTeam(game.getTeams().get(0));
 	}
-	public Team findTeamById(int gameId, int teamId) {
+	public Team findTeamById(int gameId, int teamId){
 		Game game = getGameById(gameId);
 		for(Team team : game.getTeams()) {
 			if(team.getId() == teamId) {
@@ -157,11 +161,12 @@ public class GameService {
 		List<AbilityScope> abilityScope = List.of(AbilityScope.OPPONENT_TURN, AbilityScope.ANY_TURN);
 		return abilityService.filterActiveAbilities(inActiveTeamAbilities, game, abilityScope);
 	}
-	public void addActiveTeamPoints(int gameId, int points) {
+	public int addActiveTeamPoints(int gameId, int points) {
 		Game game = games.get(gameId);
 		game.getActiveTeam().addPoints(points);
+		return game.getActiveTeam().getPoints();
 	}
-	public List<TeamPoints> returnCurrentPoints(int gameId){
+	public List<TeamPoints> getCurrentPoints(int gameId){
 		Game game = games.get(gameId);
 		List<TeamPoints> teamPointsList = new ArrayList<>();
 		for(Team team : game.getTeams()) {
